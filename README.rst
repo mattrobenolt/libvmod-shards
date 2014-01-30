@@ -1,55 +1,47 @@
-============
-vmod_example
-============
+===========
+vmod_shards
+===========
 
-----------------------
-Varnish Example Module
-----------------------
+--------------------------
+Varnish Consistent Hashing
+--------------------------
 
-:Author: Martin Blix Grydeland
-:Date: 2011-05-26
+:Author: Matt Robenolt
+:Date: 2014-01-30
 :Version: 1.0
 :Manual section: 3
 
 SYNOPSIS
 ========
 
-import example;
+import shards;
 
 DESCRIPTION
 ===========
 
-Example Varnish vmod demonstrating how to write an out-of-tree Varnish vmod
-for Varnish 3.0 and later.
-
-Implements the traditional Hello World as a vmod.
+Generate a consistent id for utilizing multiple file-backed storage backends.
 
 FUNCTIONS
 =========
 
-hello
------
+shards
+------
 
 Prototype
         ::
 
-                hello(STRING S)
+                id(STRING KEY, INT SHARDS)
 Return value
 	STRING
 Description
-	Returns "Hello, " prepended to S
+	Returns a consistent shard id based on KEY using murmur3
 Example
         ::
 
-                set resp.http.hello = example.hello("World");
+                set beresp.backend = "s" + shards.id(req.url, 16);
 
 INSTALLATION
 ============
-
-This is an example skeleton for developing out-of-tree Varnish
-vmods available from the 3.0 release. It implements the "Hello, World!" 
-as a vmod callback. Not particularly useful in good hello world 
-tradition,but demonstrates how to get the glue around a vmod working.
 
 The source tree is based on autotools to configure the building, and
 does also have the necessary bits in place to do functional unit tests
@@ -74,26 +66,23 @@ Make targets:
 * make check - runs the unit tests in ``src/tests/*.vtc``
 
 In your VCL you could then use this vmod along the following lines::
-        
-        import example;
 
-        sub vcl_deliver {
-                # This sets resp.http.hello to "Hello, World"
-                set resp.http.hello = example.hello("World");
+        import shards;
+
+        sub vcl_fetch {
+                # Set which backend shard to actually store the data in
+                set beresp.backend = "s" + shards.id(req.url, 16);
         }
 
 HISTORY
 =======
 
-This manual page was released as part of the libvmod-example package,
-demonstrating how to create an out-of-tree Varnish vmod. For further
-examples and inspiration check the vmod directory:
- https://www.varnish-cache.org/vmods
+This manual page was released as part of the libvmod-shards package.
 
 COPYRIGHT
 =========
 
 This document is licensed under the same license as the
-libvmod-example project. See LICENSE for details.
+libvmod-shards project. See LICENSE for details.
 
-* Copyright (c) 2011 Varnish Software
+* Copyright (c) 2014 Matt Robenolt

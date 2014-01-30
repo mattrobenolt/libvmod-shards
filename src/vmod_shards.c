@@ -26,7 +26,7 @@ vmod_id(struct sess *sp, const char *key, const int shards)
 	p = sp->wrk->ws->f;              /* Front of workspace area */
 
 	MurmurHash3_x64_128(key, strlen(key), seed, hash);
-	v = snprint(p, u, "%d", hash[0] % shards)
+	v = snprintf(p, u, "%d", hash[0] % shards);
 	v++;
 	if (v > u) {
 		/* No space, reset and leave */

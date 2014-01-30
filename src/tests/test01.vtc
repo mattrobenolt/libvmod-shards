@@ -1,0 +1,22 @@
+varnishtest "Test example vmod"
+
+server s1 {
+       rxreq
+       txresp
+} -start
+
+varnish v1 -vcl+backend {
+	import shards from "${vmod_topbuild}/src/.libs/libvmod_shards.so";
+
+	sub vcl_deliver {
+		set resp.http.shard = shards.id("key", 16);
+	}
+} -start
+
+client c1 {
+	txreq -url "/"
+	rxresp
+	expect resp.http.hello == "12"
+}
+
+client c1 -run

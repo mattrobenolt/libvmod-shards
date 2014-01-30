@@ -1,0 +1,3 @@
+Module shards
+Init init_function
+Function STRING id(STRING, INT)

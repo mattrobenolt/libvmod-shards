@@ -30,11 +30,11 @@ shards
 Prototype
         ::
 
-                id(STRING KEY, INT SHARDS)
+                id(STRING key, INT shards)
 Return value
 	STRING
 Description
-	Returns a consistent shard id based on KEY using murmur3
+	Returns a consistent shard id based on *key* using murmur3
 Example
         ::
 

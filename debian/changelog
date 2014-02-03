@@ -1,5 +1,5 @@
-libvmod-example (0.1) unstable; urgency=low
+libvmod-shards (0.1) unstable; urgency=low
 
   * First version
 
- -- Lasse Karstensen <lasse@varnish-software.com>  Wed, 19 Sep 2012 15:03:00 +0200
+ -- Matt Robenolt <m@robenolt.com>  Mon, 03 Feb 2014 20:58:51 +0000

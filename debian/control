@@ -1,12 +1,12 @@
-Source: libvmod-example
+Source: libvmod-shards
 Section: web
 Priority: extra
-Maintainer: Varnish Software <support@varnish-software.com>
+Maintainer: Matt Robenolt <m@robenolt.com>
 Build-Depends: debhelper (>= 7), build-essential, python-docutils
 Standards-Version: 3.8.1
-Vcs-Git: git://github.com/varnish/libvmod-example.git
+Vcs-Git: git://github.com/mattrobenolt/libvmod-shards.git
 
-Package: libvmod-example
+Package: libvmod-shards
 Architecture: any
 Depends: varnish, ${Varnish:ABI}, ${misc:Depends}
-Description: Example vmod for Varnish
+Description: Generate a shard id using murmur3

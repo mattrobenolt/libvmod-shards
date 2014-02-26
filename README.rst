@@ -71,7 +71,7 @@ In your VCL you could then use this vmod along the following lines::
 
         sub vcl_fetch {
                 # Set which storage shard to actually store the data in
-                set beresp.shard = "s" + shards.id(req.url, 16);
+                set beresp.storage = "s" + shards.id(req.url, 16);
         }
 
 HISTORY

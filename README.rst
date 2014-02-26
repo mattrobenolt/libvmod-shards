@@ -38,7 +38,7 @@ Description
 Example
         ::
 
-                set beresp.backend = "s" + shards.id(req.url, 16);
+                set beresp.storage = "s" + shards.id(req.url, 16);
 
 INSTALLATION
 ============
@@ -70,8 +70,8 @@ In your VCL you could then use this vmod along the following lines::
         import shards;
 
         sub vcl_fetch {
-                # Set which backend shard to actually store the data in
-                set beresp.backend = "s" + shards.id(req.url, 16);
+                # Set which storage shard to actually store the data in
+                set beresp.shard = "s" + shards.id(req.url, 16);
         }
 
 HISTORY

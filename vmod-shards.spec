@@ -1,39 +1,43 @@
-Summary: Example VMOD for Varnish
+Summary: Varnish Consistent Hashing
 Name: vmod-shards
-Version: 0.1
+Version: 0.2
 Release: 1%{?dist}
 License: BSD
 Group: System Environment/Daemons
 Source0: libvmod-shards.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires: varnish > 3.0
-BuildRequires: make, python-docutils
+Requires: varnish >= 4.0.2
+BuildRequires: make
+BuildRequires: python-docutils
+BuildRequires: varnish >= 4.0.2
+BuildRequires: varnish-libs-devel >= 4.0.2
 
 %description
-Example VMOD
+Varnish Consistent Hashing
 
 %prep
-%setup -n libvmod-shards
+%setup -n libvmod-shards-trunk
 
 %build
-# this assumes that VARNISHSRC is defined on the rpmbuild command line, like this:
-# rpmbuild -bb --define 'VARNISHSRC /home/user/rpmbuild/BUILD/varnish-3.0.3' redhat/*spec
-./configure VARNISHSRC=%{VARNISHSRC} VMODDIR="$(PKG_CONFIG_PATH=%{VARNISHSRC} pkg-config --variable=vmoddir varnishapi)" --prefix=/usr/ --docdir='${datarootdir}/doc/%{name}'
-make
-make check
+%configure --prefix=/usr/
+%{__make} %{?_smp_mflags}
+%{__make} %{?_smp_mflags} check
 
 %install
-make install DESTDIR=%{buildroot}
+[ %{buildroot} != "/" ] && %{__rm} -rf %{buildroot}
+%{__make} install DESTDIR=%{buildroot}
 
 %clean
-rm -rf %{buildroot}
+[ %{buildroot} != "/" ] && %{__rm} -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{_libdir}/varnish/vmods/
-%doc /usr/share/doc/%{name}/*
+%{_libdir}/varnis*/vmods/
+%doc /usr/share/doc/lib%{name}/*
 %{_mandir}/man?/*
 
 %changelog
+* Tue Aug 30 2015 Ondrej Novy <ondrej.novy@firma.seznam.cz> - 0.2-0.20150830
+- Varnish 4 support.
 * Thu Jan 30 2014 Matt Robenolt <matt@ydekproductions.com> - 0.1-0.20140130
 - Initial version.

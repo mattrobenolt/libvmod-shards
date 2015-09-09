@@ -1,3 +1,9 @@
+libvmod-shards (0.2) unstable; urgency=low
+
+  * Varnish 4 support
+
+ -- Ondrej Novy <ondrej.novy@firma.seznam.cz>  Tue, 30 Aug 2015 11:50:50 +0000
+
 libvmod-shards (0.1-1) unstable; urgency=low
 
   * First version
